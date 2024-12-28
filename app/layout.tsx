@@ -1,9 +1,11 @@
 import { Metadata } from "next";
 import { Space_Mono, Space_Grotesk } from "next/font/google";
+import { Analytics } from "@vercel/analytics/react";
 import { Toaster } from "@/components/ui/sonner";
 import { Provider } from "@/components/provider";
 import { Header } from "@/components/header";
 import { Footer } from "@/components/footer";
+import { getBaseURL } from "@/lib/utils";
 import { site } from "@/lib/site";
 import "@/styles/globals.css";
 
@@ -26,9 +28,38 @@ export const metadata: Metadata = {
     default: site.name,
     template: `%s - ${site.name}`,
   },
-  metadataBase: new URL(site.url),
+  metadataBase: new URL(getBaseURL()),
+  alternates: {
+    canonical: getBaseURL(),
+  },
   description: site.description,
-  keywords: ["Stronghold", "SHx", "Dashxboard", "Governance", "Stellar"],
+  keywords: [
+    "Stronghold",
+    "SHx",
+    "SHx Token",
+    "Dashxboard",
+    "Governance",
+    "SHx Governance",
+    "Stellar",
+    "Stellar Blockchain",
+    "Cryptocurrency",
+    "Blockchain",
+  ],
+  openGraph: {
+    title: {
+      default: site.name,
+      template: `%s - ${site.name}`,
+    },
+    description: site.description,
+    type: "website",
+    url: getBaseURL(),
+    siteName: site.name,
+  },
+  twitter: {
+    card: "summary",
+    title: site.name,
+    description: site.description,
+  },
 };
 
 export default function RootLayout({
@@ -56,6 +87,7 @@ export default function RootLayout({
           <Toaster />
           <Footer />
         </Provider>
+        <Analytics />
       </body>
     </html>
   );

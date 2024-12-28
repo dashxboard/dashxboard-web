@@ -161,6 +161,18 @@ export const generateMetadata = async (
     alternates: {
       canonical: url,
     },
+    openGraph: {
+      title,
+      description,
+      url,
+      type: "website",
+      siteName: "Dashxboard",
+    },
+    twitter: {
+      card: "summary",
+      title,
+      description,
+    },
   };
 };
 

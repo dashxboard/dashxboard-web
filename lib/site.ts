@@ -1,7 +1,8 @@
 export const site = {
   name: "Dashxboard",
   url: "https://dashxboard.com",
-  description: "Stronghold (SHx) Community Dashboard",
+  description:
+    "The unofficial platform designed for the Stronghold (SHx) community.",
   links: {
     discord: "https://discord.gg/eJhzDbKbdj",
     edp: "https://docs.shx.stronghold.co/ecosystem/edp",

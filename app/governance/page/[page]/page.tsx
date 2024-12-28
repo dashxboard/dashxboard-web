@@ -1,4 +1,14 @@
+import { Metadata } from "next";
 import { List } from "@/components/governance/list";
+import { getBaseURL } from "@/lib/utils";
+
+export const metadata: Metadata = {
+  alternates: { canonical: getBaseURL() },
+  robots: {
+    index: false,
+    follow: false,
+  },
+};
 
 type GovernancePageParams = Promise<{ page: string }>;
 

@@ -1,6 +1,17 @@
 import { PropsWithChildren } from "react";
+import { Metadata } from "next";
 import { GovernanceHero } from "@/components/hero";
 import { Progress } from "@/components/progess";
+import { getBaseURL } from "@/lib/utils";
+
+export const metadata: Metadata = {
+  title: "Governance",
+  alternates: { canonical: getBaseURL() },
+  robots: {
+    index: true,
+    follow: true,
+  },
+};
 
 export default function ProposalsLayout({ children }: PropsWithChildren) {
   return (

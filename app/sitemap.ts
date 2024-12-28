@@ -16,7 +16,20 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     {
       url: getBaseURL(),
       changeFrequency: "daily",
+      lastModified: new Date().toISOString(),
       priority: 1,
+    },
+    {
+      url: `${getBaseURL()}/governance`,
+      changeFrequency: "monthly",
+      lastModified: new Date().toISOString(),
+      priority: 0.8,
+    },
+    {
+      url: `${getBaseURL()}/faq`,
+      changeFrequency: "monthly",
+      lastModified: new Date().toISOString(),
+      priority: 0.8,
     },
     ...proposals.map((p) => {
       return {
