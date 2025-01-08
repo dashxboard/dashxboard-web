@@ -1,7 +1,6 @@
 import Link from "next/link";
 import { ExternalLink, MessageCircle } from "lucide-react";
 import { Card, CardContent, CardHeader } from "@/components/ui/card";
-import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import {
   Tooltip,
@@ -27,10 +26,10 @@ export const GovernanceCard = ({
   return (
     <Card
       className={cn(
-        "flex flex-col h-full transition-all duration-300 ease-in-out",
+        "flex flex-col h-full transition-all duration-500 ease-in-out",
         isCompleted
-          ? "border-blue-500/20 dark:border-blue-400/30 bg-blue-50/50 dark:bg-blue-950/20 hover:border-blue-500/40 dark:hover:border-blue-400/50"
-          : "hover:border-neutral-500/40 dark:hover:border-white/20"
+          ? "border-[#5865F2]/30 dark:border-[#7289DA]/30 bg-[#5865F2]/5 dark:bg-[#7289DA]/5 hover:border-blue-500/50 dark:hover:border-blue-400/50"
+          : "hover:border-neutral-500/50 dark:hover:border-white/30"
       )}
     >
       <CardHeader>
@@ -69,11 +68,7 @@ export const GovernanceCard = ({
                       className="h-8 w-8 p-0"
                       asChild
                     >
-                      <Link
-                        href={discussion}
-                        target="_blank"
-                        rel="noopener noreferrer"
-                      >
+                      <Link href={discussion}>
                         <MessageCircle className="h-4 w-4" />
                       </Link>
                     </Button>
@@ -85,9 +80,6 @@ export const GovernanceCard = ({
               </TooltipProvider>
             )}
           </div>
-          <Badge variant={isCompleted ? "default" : "secondary"}>
-            {status}
-          </Badge>
         </div>
       </CardContent>
     </Card>

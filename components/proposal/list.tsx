@@ -1,23 +1,10 @@
 import { Balancer } from "react-wrap-balancer";
 import { db, sql } from "@dashxboard/db";
 import { FrownIcon } from "lucide-react";
-import {
-  Pagination,
-  PaginationContent,
-  PaginationItem,
-  PaginationLink,
-  PaginationNext,
-  PaginationPrevious,
-} from "@/components/ui/pagination";
-import { Proposal } from "@/components/proposal/proposal";
+import { Filter } from "@/components/proposal/filter";
 import { ScrollUp } from "@/components/scrollup";
 
-const PROPOSALS_BY_PAGE = 20;
-
-const getProposals = async (page: number) => {
-  const limit = PROPOSALS_BY_PAGE;
-  const offset = (page - 1) * limit;
-
+const getProposals = async () => {
   return await db
     .selectFrom("posts")
     .innerJoin("users", "users.snowflake", "posts.user")
@@ -47,17 +34,11 @@ const getProposals = async (page: number) => {
     ])
     .where("indexed", "=", true)
     .orderBy("created", "desc")
-    .limit(limit + 1)
-    .offset(offset)
     .execute();
 };
 
-type ListProps = {
-  page: number;
-};
-
-export const List = async ({ page }: ListProps) => {
-  const proposals = await getProposals(page);
+export const List = async () => {
+  const proposals = await getProposals();
 
   if (proposals.length === 0) {
     return (
@@ -76,54 +57,9 @@ export const List = async ({ page }: ListProps) => {
     );
   }
 
-  const hasNext = proposals.length > PROPOSALS_BY_PAGE;
-  const toRender = proposals.slice(0, PROPOSALS_BY_PAGE);
-  const hasPrevious = page > 1;
-
   return (
     <>
-      <div className="grid md:grid-cols-3 sm:grid-cols-2 grid-cols-1 sm:gap-8 gap-4 mb-5">
-        {toRender.map((proposal) => (
-          <Proposal
-            key={proposal.id.toString()}
-            id={proposal.snowflake}
-            title={proposal.title}
-            messagesCount={parseInt(proposal.messagesCount ?? "0", 10)}
-            participantsCount={parseInt(proposal.participantsCount ?? "0", 10)}
-            created={proposal.created}
-            category={proposal.category}
-            isConcluded={proposal.isConcluded}
-            author={{
-              username: proposal.username,
-            }}
-          />
-        ))}
-      </div>
-      <div className="mt-4 flex space-x-4 justify-center">
-        {(hasPrevious || hasNext) && (
-          <Pagination className="mt-4">
-            <PaginationContent>
-              {hasPrevious && (
-                <PaginationItem>
-                  <PaginationPrevious href={`/page/${page - 1}`} />
-                </PaginationItem>
-              )}
-
-              <PaginationItem>
-                <PaginationLink href={`/page/${page}`} isActive>
-                  {page}
-                </PaginationLink>
-              </PaginationItem>
-
-              {hasNext && (
-                <PaginationItem>
-                  <PaginationNext href={`/page/${page + 1}`} />
-                </PaginationItem>
-              )}
-            </PaginationContent>
-          </Pagination>
-        )}
-      </div>
+      <Filter proposals={proposals} />
       <ScrollUp />
     </>
   );

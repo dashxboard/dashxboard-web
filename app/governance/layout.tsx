@@ -6,7 +6,14 @@ import { getBaseURL } from "@/lib/utils";
 
 export const metadata: Metadata = {
   title: "Governance",
-  alternates: { canonical: getBaseURL() },
+  description: "Reference to the official Stronghold Governance.",
+  alternates: { canonical: `${getBaseURL()}/governance` },
+  openGraph: {
+    title: "Governance - Dashxboard",
+    description: "Reference to the official Stronghold Governance.",
+    url: `${getBaseURL()}/governance`,
+    type: "website",
+  },
   robots: {
     index: true,
     follow: true,

@@ -34,8 +34,8 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     ...proposals.map((p) => {
       return {
         url: `${getBaseURL()}/proposal/${p.snowflake}`,
-        changeFrequency: "weekly",
-        priority: 0.9,
+        changeFrequency: p.active ? "daily" : "weekly",
+        priority: p.active ? 0.9 : 0.7,
         lastModified: p.active,
       } satisfies MetadataRoute.Sitemap[0];
     }),

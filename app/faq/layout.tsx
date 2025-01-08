@@ -7,7 +7,16 @@ import { getBaseURL } from "@/lib/utils";
 
 export const metadata: Metadata = {
   title: "FAQ",
-  alternates: { canonical: getBaseURL() },
+  description:
+    "Find answers to the most common questions about the Dashxboard, features, and community guidelines.",
+  alternates: { canonical: `${getBaseURL()}/faq` },
+  openGraph: {
+    title: "FAQ - Dashxboard",
+    description:
+      "Find answers to the most common questions about the Dashxboard, features, and community guidelines.",
+    url: `${getBaseURL()}/faq`,
+    type: "website",
+  },
   robots: {
     index: true,
     follow: true,

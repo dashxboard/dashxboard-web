@@ -11,13 +11,13 @@ export const Conclusion = ({ isConcluded, children }: ConclusionProps) => {
         className={cn(
           "rounded-md border p-4",
           isConcluded
-            ? "border-blue-500/20 dark:border-blue-400/30 bg-blue-50/50 dark:bg-blue-950/20"
+            ? "border-[#5865F2]/30 dark:border-[#7289DA]/30 bg-[#5865F2]/5 dark:bg-[#7289DA]/5"
             : "border-neutral-200 dark:border-neutral-800"
         )}
       >
         {children}
         {isConcluded && (
-          <div className="flex items-center gap-2 mt-4 text-blue-600 dark:text-blue-400">
+          <div className="flex items-center gap-2 mt-4 text-[#5865F2] dark:text-[#7289DA]">
             <Bookmark className="w-4 h-4 shrink-0" />
             <span className="text-sm font-medium">Conclusion</span>
           </div>

@@ -20,7 +20,7 @@ export function Navbar() {
           href="/"
           className={cn(
             "relative transition-colors hover:text-foreground/80",
-            "after:absolute after:bottom-0 after:left-0 after:h-[2px] after:w-full after:origin-bottom-right after:scale-x-0 after:bg-current after:transition-transform after:duration-300 hover:after:origin-bottom-left hover:after:scale-x-100",
+            "after:absolute after:bottom-0 after:left-0 after:h-[1px] after:w-full after:origin-bottom-right after:scale-x-0 after:bg-current after:transition-transform after:duration-300 hover:after:origin-bottom-left hover:after:scale-x-100",
             pathname === "/" ? "text-foreground" : "text-foreground/80"
           )}
         >
@@ -30,7 +30,7 @@ export function Navbar() {
           href="/governance"
           className={cn(
             "relative transition-colors hover:text-foreground/80",
-            "after:absolute after:bottom-0 after:left-0 after:h-[2px] after:w-full after:origin-bottom-right after:scale-x-0 after:bg-current after:transition-transform after:duration-300 hover:after:origin-bottom-left hover:after:scale-x-100",
+            "after:absolute after:bottom-0 after:left-0 after:h-[1px] after:w-full after:origin-bottom-right after:scale-x-0 after:bg-current after:transition-transform after:duration-300 hover:after:origin-bottom-left hover:after:scale-x-100",
             pathname === "/governance"
               ? "text-foreground"
               : "text-foreground/80"
@@ -42,7 +42,7 @@ export function Navbar() {
           href="/faq"
           className={cn(
             "relative transition-colors hover:text-foreground/80",
-            "after:absolute after:bottom-0 after:left-0 after:h-[2px] after:w-full after:origin-bottom-right after:scale-x-0 after:bg-current after:transition-transform after:duration-300 hover:after:origin-bottom-left hover:after:scale-x-100",
+            "after:absolute after:bottom-0 after:left-0 after:h-[1px] after:w-full after:origin-bottom-right after:scale-x-0 after:bg-current after:transition-transform after:duration-300 hover:after:origin-bottom-left hover:after:scale-x-100",
             pathname === "/faq" ? "text-foreground" : "text-foreground/80"
           )}
         >

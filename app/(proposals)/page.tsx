@@ -4,7 +4,7 @@ export const dynamic = "error";
 export const revalidate = 60;
 
 const Proposals = async () => {
-  return <List page={1} />;
+  return <List />;
 };
 
 export default Proposals;

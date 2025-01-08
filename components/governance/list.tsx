@@ -1,24 +1,10 @@
 import { Balancer } from "react-wrap-balancer";
 import { FrownIcon } from "lucide-react";
-import {
-  Pagination,
-  PaginationContent,
-  PaginationItem,
-  PaginationLink,
-  PaginationNext,
-  PaginationPrevious,
-} from "@/components/ui/pagination";
 import { ScrollUp } from "@/components/scrollup";
 import { GovernanceCard } from "@/components/governance/card";
 import { governanceCard } from "@/lib/proposals";
 
-const CARDS_BY_PAGE = 20;
-
-type GovernanceProps = {
-  page: number;
-};
-
-export function List({ page }: GovernanceProps) {
+export function List() {
   const sortedProposals = [...governanceCard].sort((a, b) => {
     const aNum = parseInt(a.id.split("-")[1]);
     const bNum = parseInt(b.id.split("-")[1]);
@@ -38,51 +24,12 @@ export function List({ page }: GovernanceProps) {
     );
   }
 
-  const hasNext = sortedProposals.length > page * CARDS_BY_PAGE;
-  const toRender = sortedProposals.slice(
-    (page - 1) * CARDS_BY_PAGE,
-    page * CARDS_BY_PAGE
-  );
-  const hasPrevious = page > 1;
-
   return (
     <>
       <div className="grid md:grid-cols-3 sm:grid-cols-2 grid-cols-1 sm:gap-8 gap-4 mb-5">
-        {toRender.map((card) => (
+        {sortedProposals.map((card) => (
           <GovernanceCard key={card.id} {...card} />
         ))}
-      </div>
-      <div className="mt-4 flex space-x-4 justify-center">
-        {(hasPrevious || hasNext) && (
-          <Pagination className="mt-4">
-            <PaginationContent>
-              {hasPrevious && (
-                <PaginationItem>
-                  <PaginationPrevious
-                    href={
-                      page - 1 === 1
-                        ? "/governance"
-                        : `/governance/page/${page - 1}`
-                    }
-                  />
-                </PaginationItem>
-              )}
-              <PaginationItem>
-                <PaginationLink
-                  href={page === 1 ? "/governance" : `/governance/page/${page}`}
-                  isActive
-                >
-                  {page}
-                </PaginationLink>
-              </PaginationItem>
-              {hasNext && (
-                <PaginationItem>
-                  <PaginationNext href={`/governance/page/${page + 1}`} />
-                </PaginationItem>
-              )}
-            </PaginationContent>
-          </Pagination>
-        )}
       </div>
       <ScrollUp />
     </>

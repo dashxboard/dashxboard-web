@@ -7,10 +7,6 @@ import { getBaseURL } from "@/lib/utils";
 export const metadata: Metadata = {
   title: "Proposals",
   alternates: { canonical: getBaseURL() },
-  robots: {
-    index: false,
-    follow: false,
-  },
 };
 
 export default function ProposalsLayout({ children }: PropsWithChildren) {

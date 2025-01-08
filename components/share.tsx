@@ -17,11 +17,13 @@ export function ShareButton({ className }: ShareButtonProps) {
   return (
     <Button
       variant="outline"
+      effect="expandIcon"
+      icon={Share}
+      iconPlacement="right"
       className={`shrink-0 ${className || ""}`}
       onClick={handleShare}
     >
-      Share
-      <Share className="h-4 w-4 ml-2" />{" "}
+      Share{" "}
     </Button>
   );
 }

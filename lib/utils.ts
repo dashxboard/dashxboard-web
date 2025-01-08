@@ -6,7 +6,6 @@ export function cn(...inputs: ClassValue[]) {
   return twMerge(clsx(inputs));
 }
 
-// Handle date/time formatting.
 export const timeFormats = (created: Date) => {
   const datetime = DateTime.fromJSDate(created).setZone("UTC");
 
@@ -76,7 +75,6 @@ export const timeAgo = (date: Date) => {
   return "just now";
 };
 
-// Handle message grouping.
 import { randomUUID } from "crypto";
 
 type RequiredMessageFields = {
@@ -130,21 +128,27 @@ export const groupMessages = <T extends RequiredMessageFields>(
   }, []);
 };
 
-// Handle text length.
 export const truncate = (str: string, length: number) => {
   return str.length > length ? str.substring(0, length) + "_" : str;
 };
 
-// Handle URL management.
 export const getBaseURL = () => {
-  return process.env.BASE_URL ?? "https://localhost:3000";
+  return process.env.BASE_URL ?? "http://localhost:3000";
 };
 
-export const getProposalURL = (proposal: string) => {
-  return `${getBaseURL()}/proposal/${proposal}`;
+export const getProposalURL = (title: string) => {
+  const baseUrl = getBaseURL();
+  if (title) {
+    const parts = title.split("-");
+    if (parts.length >= 2) {
+      const proposalID = parts[0] + "-" + parts[1].split(" ")[0];
+      return `${baseUrl}/proposal/${proposalID}`;
+    }
+  }
+  console.error("Invalid proposal title:", title);
+  return baseUrl;
 };
 
-// Handle video validation.
 export const isVideo = (link: string): boolean => {
   const extensions = [".mp4", ".avi", ".flv", ".wmv"];
   return extensions.some((extension) => link.endsWith(extension));

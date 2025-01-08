@@ -23,6 +23,7 @@ type MessageProps = {
     op: boolean;
     moderator: boolean;
     id: string;
+    reputation: number;
   };
   created: Date;
   attachments: Attachment[];
@@ -60,9 +61,11 @@ export const Message = ({
           )}
           <div className="flex-1 w-0">
             {firstRow && (
-              <div className="flex items-center gap-2 mb-1">
-                <span className="flex items-center gap-2">
-                  {author.username}
+              <div className="flex flex-col md:flex-row md:items-center gap-2 mb-1">
+                <span className="block md:hidden">{author.username}</span>
+                <div className="flex flex-row sm:items-center gap-2">
+                  {" "}
+                  <span className="hidden md:block">{author.username}</span>
                   {!author.public && (
                     <TooltipProvider>
                       <Tooltip>
@@ -75,22 +78,23 @@ export const Message = ({
                       </Tooltip>
                     </TooltipProvider>
                   )}
-                </span>
-                {author.moderator && (
-                  <TooltipProvider>
-                    <Tooltip>
-                      <TooltipTrigger>
-                        <Shield className="w-4 h-4 text-blue-500" />
-                      </TooltipTrigger>
-                      <TooltipContent>
-                        <p>Moderator</p>
-                      </TooltipContent>
-                    </Tooltip>
-                  </TooltipProvider>
-                )}
-                {author.op && <Badge variant="outline">OP</Badge>}
+                  {author.moderator && (
+                    <TooltipProvider>
+                      <Tooltip>
+                        <TooltipTrigger>
+                          <Shield className="w-4 h-4 text-[#5865F2]" />
+                        </TooltipTrigger>
+                        <TooltipContent>
+                          <p>Moderator</p>
+                        </TooltipContent>
+                      </Tooltip>
+                    </TooltipProvider>
+                  )}
+                  {author.op && <Badge variant="secondary">OP</Badge>}
+                  <Badge variant="outline">{author.reputation}</Badge>
+                </div>
                 <time
-                  className="text-xs text-muted-foreground"
+                  className="text-xs text-muted-foreground sm:mt-0"
                   dateTime={at.iso}
                 >
                   <DisplayTime dateString={created.toISOString()} />

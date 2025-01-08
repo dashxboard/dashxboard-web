@@ -42,7 +42,8 @@ export const governanceCard: GovernanceCard[] = [
     description:
       "This proposal asks if the proposed SHX Governance Rules be adopted as the foundational rules for how SHx governance is conducted.",
     date: new Date("2024-12-11"),
-    status: "Awaiting Outcome",
+    status: "Implementation",
     link: "https://docs.shx.stronghold.co/governance/proposals/4-adoption-of-proposed-shx-governance-rules",
+    discussion: "https://www.dashxboard.com/proposal/PROP-004",
   },
 ];

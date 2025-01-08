@@ -16,12 +16,12 @@ import { Badge } from "@/components/ui/badge";
 import { ShareButton } from "@/components/share";
 import { Progress } from "@/components/progess";
 
-const getIndexed = async (snowflake: string) => {
+const getIndexed = async (id: string) => {
   try {
     const proposal = await db
       .selectFrom("posts")
       .select("indexed")
-      .where("snowflake", "=", snowflake)
+      .where("title", "like", `${id}%`)
       .executeTakeFirst();
 
     return proposal ? proposal.indexed : false;
@@ -31,7 +31,7 @@ const getIndexed = async (snowflake: string) => {
   }
 };
 
-const getProposal = async (snowflake: string) => {
+const getProposal = async (id: string) => {
   return await db
     .selectFrom("posts")
     .innerJoin("users", "users.snowflake", "posts.user")
@@ -63,11 +63,13 @@ const getProposal = async (snowflake: string) => {
           .where("messages.post", "=", eb.ref("posts.snowflake"))
           .as("participantsCount"),
     ])
-    .where("posts.snowflake", "=", snowflake)
+    .where("posts.title", "like", `${id}%`)
     .executeTakeFirst();
 };
 
-const getMessage = async (post: string) => {
+const getMessage = async (proposal: any) => {
+  if (!proposal) return null;
+
   return await db
     .selectFrom("messages")
     .leftJoin("attachments", "attachments.message", "messages.snowflake")
@@ -82,6 +84,7 @@ const getMessage = async (post: string) => {
       "users.public as isPublic",
       "users.moderator as isModerator",
       "users.snowflake as userID",
+      "users.reputation as userReputation",
       sql<Attachment[]>`
         coalesce(json_agg(
           json_build_object(
@@ -93,14 +96,16 @@ const getMessage = async (post: string) => {
         ) filter (where attachments.id is not null), '[]'::json)
       `.as("attachments"),
     ])
-    .where("messages.post", "=", post)
-    .where("messages.snowflake", "=", post)
+    .where("messages.post", "=", proposal.snowflake)
+    .where("messages.snowflake", "=", proposal.snowflake)
     .groupBy(["messages.id", "users.id"])
     .orderBy("messages.created", "asc")
     .executeTakeFirst();
 };
 
-const getMessages = async (post: string) => {
+const getMessages = async (proposal: any) => {
+  if (!proposal) return [];
+
   return await db
     .selectFrom("messages")
     .leftJoin("attachments", "attachments.message", "messages.snowflake")
@@ -116,6 +121,7 @@ const getMessages = async (post: string) => {
       "users.public as isPublic",
       "users.moderator as isModerator",
       "users.snowflake as userID",
+      "users.reputation as userReputation",
       sql<Attachment[]>`
           coalesce(json_agg(
             json_build_object(
@@ -127,8 +133,8 @@ const getMessages = async (post: string) => {
           ) filter (where attachments.id is not null), '[]'::json)
         `.as("attachments"),
     ])
-    .where("post", "=", post)
-    .where("messages.snowflake", "!=", post)
+    .where("post", "=", proposal.snowflake)
+    .where("messages.snowflake", "!=", proposal.snowflake)
     .groupBy(["messages.id", "users.id"])
     .orderBy("messages.created", "asc")
     .execute();
@@ -148,30 +154,34 @@ export const generateMetadata = async (
 ): Promise<Metadata> => {
   const params = await props.params;
   const { id } = params;
-  const proposal = await getProposal(id);
-  const posted = await getMessage(id);
-  const title = proposal?.title;
-  const messageFormatted = await parseMessage(posted?.content || "", true);
-  const description = truncate(messageFormatted, 230);
-  const url = getProposalURL(id);
+  const decodedTitle = decodeURIComponent(id);
+  const proposal = await getProposal(decodedTitle);
+  const posted = await getMessage(proposal);
+  const url = getProposalURL(decodedTitle);
 
   return {
-    title,
-    description,
+    title: `${decodedTitle}`,
+    description: truncate(await parseMessage(posted?.content || "", true), 230),
     alternates: {
       canonical: url,
     },
     openGraph: {
-      title,
-      description,
+      title: `${decodedTitle} | Dashxboard`,
+      description: truncate(
+        await parseMessage(posted?.content || "", true),
+        230
+      ),
       url,
-      type: "website",
+      type: "article",
       siteName: "Dashxboard",
     },
     twitter: {
       card: "summary",
-      title,
-      description,
+      title: `${decodedTitle} | Dashxboard`,
+      description: truncate(
+        await parseMessage(posted?.content || "", true),
+        230
+      ),
     },
   };
 };
@@ -179,6 +189,7 @@ export const generateMetadata = async (
 const Proposal = async (props: ProposalProps) => {
   const params = await props.params;
   const { id } = params;
+
   const isIndexed = await getIndexed(id);
   if (!isIndexed) {
     notFound();
@@ -189,8 +200,8 @@ const Proposal = async (props: ProposalProps) => {
     notFound();
   }
 
-  const messages = await getMessages(id);
-  const posted = await getMessage(id);
+  const messages = await getMessages(proposal);
+  const posted = await getMessage(proposal);
   const conclusion = messages.find((m) => m.snowflake === proposal.status);
   const grouped = groupMessages(messages, proposal.status);
   const hasStatus =
@@ -289,22 +300,24 @@ const Proposal = async (props: ProposalProps) => {
             </div>
           </div>
           <div className="flex w-full sm:w-auto items-center gap-2">
-            <div className="flex-1 sm:flex-initial">
+            <div className="flex-1 sm:flex-initial w-full">
               <ShareButton className="w-full" />
             </div>
             <Button
               variant="outline"
+              effect="expandIcon"
+              icon={ExternalLink}
+              iconPlacement="right"
               asChild
               className="flex-1 sm:flex-initial w-full"
             >
               <Link
-                href={`https://discord.com/channels/1320599752915681320/${proposal.snowflake}/${proposal.snowflake}`}
+                href={`https://discord.com/channels/1271465994384310387/${proposal.snowflake}/${proposal.snowflake}`}
                 className="flex items-center justify-center gap-2"
                 target="_blank"
                 rel="noopener noreferrer"
               >
                 Open in Discord
-                <ExternalLink className="h-4 w-4" />
               </Link>
             </Button>
           </div>
@@ -324,6 +337,7 @@ const Proposal = async (props: ProposalProps) => {
                 op: true,
                 moderator: posted.isModerator,
                 id: posted.userID,
+                reputation: posted.userReputation,
               }}
               attachments={posted.attachments}
               firstRow
@@ -335,8 +349,8 @@ const Proposal = async (props: ProposalProps) => {
           )}
         </Conclusion>
         {conclusion && (
-          <div className="w-full p-4 space-y-2 border rounded-md border-blue-500/20 dark:border-blue-400/30 bg-blue-50/50 dark:bg-blue-950/20">
-            <div className="flex gap-2 items-center text-blue-600 dark:text-blue-400">
+          <div className="w-full p-4 space-y-2 border rounded-md border-[#5865F2]/30 dark:border-[#7289DA]/30 bg-[#5865F2]/5 dark:bg-[#7289DA]/5">
+            <div className="flex gap-2 items-center text-[#5865F2] dark:text-[#7289DA]">
               <CircleCheck className="w-4 h-4 shrink-0" />
               <span className="text-sm font-medium">
                 This proposal has been marked as concluded.
@@ -392,6 +406,7 @@ const Proposal = async (props: ProposalProps) => {
                   op: posted ? message.author === posted.author : false,
                   moderator: message.isModerator,
                   id: message.id,
+                  reputation: message.userReputation,
                 }}
                 attachments={message.attachments}
               />

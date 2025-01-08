@@ -16,23 +16,23 @@
 .d-mention {
   padding: 0 0.5rem;
   color: white;
-  background-color: rgba(88, 101, 242, 0.9);
+  background-color: rgb(88, 101, 242);
   border-radius: 0.25rem;
   font-weight: 500;
 }
 
 .dark .d-mention {
-  background-color: rgba(88, 101, 242, 0.8);
+  background-color: rgb(114, 137, 218);
 }
 
 .d-link {
-  color: #00a8fc;
+  color: rgb(88, 101, 242);
   text-decoration: underline;
   text-underline-offset: 4px;
 }
 
 .dark .d-link {
-  color: #00b0f4;
+  color: rgb(114, 137, 218);
 }
 
 .d-quote {

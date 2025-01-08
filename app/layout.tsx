@@ -1,5 +1,7 @@
+import Script from "next/script";
 import { Metadata } from "next";
 import { Space_Mono, Space_Grotesk } from "next/font/google";
+import { SpeedInsights } from "@vercel/speed-insights/next";
 import { Analytics } from "@vercel/analytics/react";
 import { Toaster } from "@/components/ui/sonner";
 import { Provider } from "@/components/provider";
@@ -26,7 +28,7 @@ const GeistMono = Space_Mono({
 export const metadata: Metadata = {
   title: {
     default: site.name,
-    template: `%s - ${site.name}`,
+    template: `%s | ${site.name}`,
   },
   metadataBase: new URL(getBaseURL()),
   alternates: {
@@ -73,6 +75,15 @@ export default function RootLayout({
         className={`${GeistSans.variable} ${GeistMono.variable} font-regular antialiased tracking-wide`}
         suppressHydrationWarning
       >
+        <Script id="microsoft-clarity-analytics">
+          {`
+            (function(c,l,a,r,i,t,y){
+              c[a]=c[a]||function(){(c[a].q=c[a].q||[]).push(arguments)};
+              t=l.createElement(r);t.async=1;t.src="https://www.clarity.ms/tag/"+i;
+              y=l.getElementsByTagName(r)[0];y.parentNode.insertBefore(t,y);
+            })(window, document, "clarity", "script", "${process.env.NEXT_PUBLIC_CLARITY_PROJECT_ID}");           
+          `}
+        </Script>
         <Provider
           attribute="class"
           defaultTheme="system"
@@ -87,6 +98,7 @@ export default function RootLayout({
           <Toaster />
           <Footer />
         </Provider>
+        <SpeedInsights />
         <Analytics />
       </body>
     </html>

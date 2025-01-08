@@ -12,7 +12,6 @@ export const site = {
   },
 };
 
-// Site routes
 interface Item {
   title: string;
   href?: string;
