@@ -1,10 +1,10 @@
-import { List } from "@/components/proposal/list";
+import { ProposalList } from "@/components/proposal/proposal-list";
 
 export const dynamic = "error";
 export const revalidate = 60;
 
 const Proposals = async () => {
-  return <List />;
+  return <ProposalList />;
 };
 
 export default Proposals;
