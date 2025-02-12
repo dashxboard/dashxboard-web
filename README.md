@@ -2,7 +2,7 @@
 
 From ideas to actions. The **unofficial** platform designed for the **Stronghold (SHx)** community.
 
-**[Website](https://dashxboard.com)** • **[Discord](https://discord.gg/eJhzDbKbdj)** • **[GitHub](https://github.com/dashxboard)**
+**[Website](https://dashxboard.com)** • **[Discord](https://discord.gg/dashxboard)** • **[GitHub](https://github.com/dashxboard)**
 
 ## Overview
 

@@ -1,4 +1,5 @@
 import { MetadataRoute } from "next";
+import { getPaths } from "@/lib/markdown-config";
 import { getBaseURL } from "@/lib/utils";
 import { db } from "@dashxboard/db";
 
@@ -11,6 +12,14 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     .where("indexed", "=", true)
     .limit(50_000)
     .execute();
+
+  const slugs = await getPaths("blog");
+  const posts = slugs.map((slug) => ({
+    url: `${getBaseURL()}/blog/${slug}`,
+    changeFrequency: "weekly" as const,
+    priority: 0.7,
+    lastModified: new Date().toISOString(),
+  }));
 
   return [
     {
@@ -39,5 +48,6 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
         lastModified: p.active,
       } satisfies MetadataRoute.Sitemap[0];
     }),
+    ...posts,
   ];
 }

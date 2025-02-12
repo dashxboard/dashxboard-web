@@ -4,11 +4,11 @@ import { Space_Mono, Space_Grotesk } from "next/font/google";
 import { SpeedInsights } from "@vercel/speed-insights/next";
 import { Analytics } from "@vercel/analytics/react";
 import { Toaster } from "@/components/ui/sonner";
-import { Provider } from "@/components/provider";
-import { Header } from "@/components/header";
-import { Footer } from "@/components/footer";
+import { ThemeProvider } from "@/components/theme/theme-provider";
+import { Header } from "@/components/layout/layout-header";
+import { Footer } from "@/components/layout/layout-footer";
 import { getBaseURL } from "@/lib/utils";
-import { site } from "@/lib/site";
+import { site } from "@/lib/site-config";
 import "@/styles/globals.css";
 
 const GeistSans = Space_Grotesk({
@@ -37,30 +37,39 @@ export const metadata: Metadata = {
   description: site.description,
   keywords: [
     "Stronghold",
+    "Stronghold Governance",
     "SHx",
     "SHx Token",
-    "Dashxboard",
-    "Governance",
+    "SHx Dashxboard",
     "SHx Governance",
-    "Stellar",
+    "SHx Community",
     "Stellar Blockchain",
-    "Cryptocurrency",
-    "Blockchain",
+    "Stellar Ecosystem",
+    "Cryptocurrency Governance Platform",
+    "Blockchain Voting System",
+    "Decentralized Governance",
   ],
   openGraph: {
     title: {
       default: site.name,
-      template: `%s - ${site.name}`,
+      template: `%s | ${site.name}`,
     },
     description: site.description,
     type: "website",
     url: getBaseURL(),
     siteName: site.name,
+    images: {
+      url: `${getBaseURL()}/og-image.png`,
+      width: 1200,
+      height: 630,
+      alt: site.name,
+    },
   },
   twitter: {
-    card: "summary",
+    card: "summary_large_image",
     title: site.name,
     description: site.description,
+    images: [`${getBaseURL()}/og-image.png`],
   },
 };
 
@@ -84,7 +93,7 @@ export default function RootLayout({
             })(window, document, "clarity", "script", "${process.env.NEXT_PUBLIC_CLARITY_PROJECT_ID}");           
           `}
         </Script>
-        <Provider
+        <ThemeProvider
           attribute="class"
           defaultTheme="system"
           enableSystem
@@ -97,7 +106,7 @@ export default function RootLayout({
           </main>
           <Toaster />
           <Footer />
-        </Provider>
+        </ThemeProvider>
         <SpeedInsights />
         <Analytics />
       </body>

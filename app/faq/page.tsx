@@ -1,5 +1,6 @@
 "use client";
 
+import { useState } from "react";
 import ReactMarkdown from "react-markdown";
 import {
   Accordion,
@@ -7,15 +8,14 @@ import {
   AccordionItem,
   AccordionTrigger,
 } from "@/components/ui/accordion";
-import { Sections } from "@/lib/faq";
-import { useState } from "react";
+import { FAQSections } from "@/lib/faq-config";
 
-export default function Faq() {
+export default function FAQPage() {
   const [open, setOpen] = useState<string | undefined>(undefined);
 
   return (
     <div className="container max-w-4xl mx-auto space-y-8">
-      {Sections.map((section, sectionIndex) => (
+      {FAQSections.map((section, sectionIndex) => (
         <div key={sectionIndex} className="space-y-4">
           <h2 className="text-2xl font-bold">{section.title}</h2>
           <Accordion

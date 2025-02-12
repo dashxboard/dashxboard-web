@@ -6,9 +6,11 @@ import {
   TooltipTrigger,
 } from "@/components/ui/tooltip";
 import { Badge } from "@/components/ui/badge";
-import { Attachment, Content } from "@/components/message/content";
-import { ScrollUp } from "@/components/scrollup";
-import { DisplayTime } from "@/components/time";
+import {
+  MessageAttachment,
+  MessageContent,
+} from "@/components/message/message-content";
+import { DisplayTime } from "@/components/ui/time";
 import { timeFormats } from "@/lib/utils";
 import "highlight.js/styles/github-dark-dimmed.css";
 
@@ -26,7 +28,7 @@ type MessageProps = {
     reputation: number;
   };
   created: Date;
-  attachments: Attachment[];
+  attachments: MessageAttachment[];
 };
 
 export const Message = ({
@@ -40,32 +42,30 @@ export const Message = ({
   const at = timeFormats(created);
 
   return (
-    <>
-      <div id={`message-${snowflake}`} className="group">
-        <div className="flex flex-row items-start gap-4 pointer-events-none [&>*]:pointer-events-auto">
-          {firstRow ? (
-            <img
-              src={author.avatar}
-              alt="Avatar"
-              className="w-10 h-10 rounded-full"
-            />
-          ) : (
-            <div className="w-10 h-10 flex items-center justify-center">
-              <time
-                className="hidden group-hover:block text-xs text-muted-foreground"
-                dateTime={at.iso}
-              >
-                <DisplayTime short dateString={created.toISOString()} />
-              </time>
-            </div>
-          )}
-          <div className="flex-1 w-0">
-            {firstRow && (
-              <div className="flex flex-col md:flex-row md:items-center gap-2 mb-1">
-                <span className="block md:hidden">{author.username}</span>
-                <div className="flex flex-row sm:items-center gap-2">
-                  {" "}
-                  <span className="hidden md:block">{author.username}</span>
+    <div id={`message-${snowflake}`} className="group">
+      <div className="flex flex-row items-start gap-4 pointer-events-none [&>*]:pointer-events-auto">
+        {firstRow ? (
+          <img
+            src={author.avatar}
+            alt="Avatar"
+            className="w-10 h-10 rounded-full border border-border"
+          />
+        ) : (
+          <div className="w-10 h-10 flex items-center justify-center">
+            <time
+              className="hidden group-hover:block text-xs text-muted-foreground/80"
+              dateTime={at.iso}
+            >
+              <DisplayTime short dateString={created.toISOString()} />
+            </time>
+          </div>
+        )}
+        <div className="flex-1 w-0">
+          {firstRow && (
+            <div className="mb-1">
+              <div className="flex flex-row items-center gap-x-2 gap-y-1 flex-wrap">
+                <span className="text-foreground">{author.username}</span>
+                <div className="flex items-center gap-2">
                   {!author.public && (
                     <TooltipProvider>
                       <Tooltip>
@@ -82,7 +82,7 @@ export const Message = ({
                     <TooltipProvider>
                       <Tooltip>
                         <TooltipTrigger>
-                          <Shield className="w-4 h-4 text-[#5865F2]" />
+                          <Shield className="w-4 h-4 text-muted-foreground" />
                         </TooltipTrigger>
                         <TooltipContent>
                           <p>Moderator</p>
@@ -91,22 +91,22 @@ export const Message = ({
                     </TooltipProvider>
                   )}
                   {author.op && <Badge variant="secondary">OP</Badge>}
-                  <Badge variant="outline">{author.reputation}</Badge>
+                  <Badge variant="outline" className="border-border">
+                    {author.reputation}
+                  </Badge>
                 </div>
                 <time
-                  className="text-xs text-muted-foreground sm:mt-0"
+                  className="text-xs text-muted-foreground basis-full md:basis-auto"
                   dateTime={at.iso}
                 >
                   <DisplayTime dateString={created.toISOString()} />
                 </time>
               </div>
-            )}
-
-            <Content content={content} attachments={attachments} />
-          </div>
+            </div>
+          )}
+          <MessageContent content={content} attachments={attachments} />
         </div>
       </div>
-      <ScrollUp />
-    </>
+    </div>
   );
 };
