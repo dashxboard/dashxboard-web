@@ -1,5 +1,6 @@
 import Link from "next/link";
 import plur from "plur";
+import ReactMarkdown from "react-markdown";
 import { Card, CardContent, CardHeader } from "@/components/ui/card";
 import { cn, timeFormats, truncate } from "@/lib/utils";
 
@@ -43,6 +44,14 @@ export const ProposalCard = ({
   const at = timeFormats(created);
   const { id: ID, rest: Title } = splitTitle(title);
 
+  const processContent = (content: string) => {
+    return content.replace(/<br\s*\/?>/gi, "\n\n").replace(/\*\*/g, "**");
+  };
+
+  const processedDescription = description
+    ? processContent(truncate(description, 100, { smart: true }))
+    : "";
+
   return (
     <Link
       href={`/proposal/${title.split("-")[0]}-${
@@ -69,9 +78,20 @@ export const ProposalCard = ({
             {messagesCount} {plur("Message", messagesCount)} ·{" "}
             {participantsCount} {plur("Participant", participantsCount)}
           </p>
-          <p className="text-sm text-foreground/90">
-            {truncate(description ? description : "", 100)}
-          </p>
+          <ReactMarkdown
+            className="text-sm text-foreground/90 prose"
+            components={{
+              br: () => <br />,
+              a: ({ node, ...props }) => (
+                <a className="text-primary underline" {...props} />
+              ),
+              code: ({ node, ...props }) => (
+                <code className="bg-muted px-1 rounded" {...props} />
+              ),
+            }}
+          >
+            {processedDescription}
+          </ReactMarkdown>
         </CardHeader>
         <CardContent className="flex flex-col gap-4 mt-auto pt-0">
           <div className="flex flex-col gap-1">

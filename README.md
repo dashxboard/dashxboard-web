@@ -59,6 +59,8 @@ Dashxboard is open-source, and contributions are welcome! You can help by:
 - Enhancing the documentation.
 - Engaging with the community on Discord.
 
+See the [Contributing Guidelines](https://github.com/dashxboard/dashxboard-web/blob/main/CONTRIBUTING.md) for technical details of contributing to the Dashxboard.
+
 ## License
 
-This project is licensed under the [MIT license](https://choosealicense.com/licenses/mit/).
+This project is licensed under the [MIT license](https://github.com/dashxboard/dashxboard-web/blob/main/LICENSE).

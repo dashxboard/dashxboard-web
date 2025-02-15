@@ -185,7 +185,6 @@ export const GovernanceCard = ({
               <Link
                 href={discussion}
                 className="flex items-center gap-2 text-sm text-primary underline underline-offset-4 hover:text-primary/80"
-                target="_blank"
               >
                 Join the Discussion
                 <MessageCircle className="h-4 w-4" />
