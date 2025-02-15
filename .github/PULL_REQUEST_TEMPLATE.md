@@ -10,14 +10,12 @@ Please check if your Pull Request fulfills the following requirements:
 
 <!-- Please check the one that applies to this Pull Request using "X". -->
 
-```
-[ ] Bugfix
-[ ] Feature
-[ ] Code style update (formatting, local variables)
-[ ] Refactoring (no functional changes, no api changes)
-[ ] Documentation content changes
-[ ] Other... Please describe:
-```
+- [ ] Bugfix
+- [ ] Feature
+- [ ] Code style update (formatting, local variables)
+- [ ] Refactoring (no functional changes, no api changes)
+- [ ] Documentation content changes
+- [ ] Other... Please describe:
 
 **What is the current behavior?**
 
@@ -31,9 +29,9 @@ Issue Number: N/A
 
 <!-- If this PR contains a breaking change, please describe its impact below. -->
 
-```
-[ ] Yes
-[ ] No
-```
+- [ ] Yes
+- [ ] No
 
 - **Other information**:
+
+N/A

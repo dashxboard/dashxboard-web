@@ -7,7 +7,7 @@ export function cn(...inputs: ClassValue[]) {
   return twMerge(clsx(inputs));
 }
 
-// See https://github.com/DefinitelyTyped/DefinitelyTyped/pull/64995
+// Luxon (See https://github.com/DefinitelyTyped/DefinitelyTyped/pull/64995)
 Settings.throwOnInvalid = true;
 declare module "luxon" {
   export interface TSSettings {
@@ -135,8 +135,35 @@ export const groupMessages = <T extends RequiredMessageFields>(
   }, []);
 };
 
-export const truncate = (str: string, length: number) => {
-  return str.length > length ? str.substring(0, length) + "..." : str;
+export const truncate = (
+  str: string,
+  length: number,
+  options: {
+    addEllipsis?: boolean;
+    smart?: boolean;
+  } = {}
+): string => {
+  const { addEllipsis = true, smart = false } = options;
+
+  if (str.length <= length && !smart) {
+    return str;
+  }
+
+  let truncated = str.substring(0, length);
+  const wasTruncated = str.length > length;
+
+  if (smart) {
+    const openBold = (truncated.match(/\*\*/g) || []).length % 2 !== 0;
+    const openItalic = (truncated.match(/_/g) || []).length % 2 !== 0;
+
+    truncated += (openBold ? "**" : "") + (openItalic ? "_" : "");
+  }
+
+  if (addEllipsis && wasTruncated) {
+    truncated += "...";
+  }
+
+  return truncated;
 };
 
 export const getBaseURL = () => {
