@@ -16,12 +16,14 @@ export const metadata: Metadata = {
       "Find answers to the most common questions about the Dashxboard, features, and community guidelines.",
     type: "website",
     url: `${getBaseURL()}/faq`,
-    images: {
-      url: `${getBaseURL()}/og-image.png`,
-      width: 1200,
-      height: 630,
-      alt: "FAQ",
-    },
+    images: [
+      {
+        url: `${getBaseURL()}/og-image.png`,
+        width: 1200,
+        height: 630,
+        alt: "FAQ",
+      },
+    ],
   },
   twitter: {
     card: "summary_large_image",

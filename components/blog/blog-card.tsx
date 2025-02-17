@@ -17,9 +17,9 @@ export const BlogCard = ({
     <Card className="flex flex-col h-full transition-colors duration-300 hover:border-muted-foreground/30 border-border">
       <Link href={`/post/${slug}`} className="no-underline">
         <CardHeader>
-          <h3 className="text-md font-semibold pr-7 text-foreground">
+          <h1 className="text-md font-semibold pr-7 text-foreground">
             {title}
-          </h3>
+          </h1>
           <div className="w-full border-t border-border/80 my-2" />
           <p className="text-sm text-muted-foreground">{description}</p>
         </CardHeader>

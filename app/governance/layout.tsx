@@ -14,12 +14,14 @@ export const metadata: Metadata = {
     description: "Reference to the official Stronghold Governance.",
     type: "website",
     url: `${getBaseURL()}/governance`,
-    images: {
-      url: `${getBaseURL()}/og-image.png`,
-      width: 1200,
-      height: 630,
-      alt: "Governance",
-    },
+    images: [
+      {
+        url: `${getBaseURL()}/og-image.png`,
+        width: 1200,
+        height: 630,
+        alt: "Governance",
+      },
+    ],
   },
   twitter: {
     card: "summary_large_image",

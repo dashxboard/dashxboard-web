@@ -16,12 +16,14 @@ export const metadata: Metadata = {
       "Dive into community-driven blogs covering SHx governance and the Dashxboard platform—written by the community, for the community.",
     type: "website",
     url: `${getBaseURL()}/blog`,
-    images: {
-      url: `${getBaseURL()}/og-image.png`,
-      width: 1200,
-      height: 630,
-      alt: "Blog",
-    },
+    images: [
+      {
+        url: `${getBaseURL()}/og-image.png`,
+        width: 1200,
+        height: 630,
+        alt: "Blog",
+      },
+    ],
   },
   twitter: {
     card: "summary_large_image",

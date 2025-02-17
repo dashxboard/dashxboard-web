@@ -26,6 +26,7 @@ export function Header() {
             <Tooltip>
               <TooltipTrigger asChild>
                 <Button
+                  asChild
                   variant="ghost"
                   size="icon"
                   className="h-8 w-8 px-0 text-muted-foreground hover:bg-accent/30 hover:text-foreground"
@@ -49,6 +50,7 @@ export function Header() {
             <Tooltip>
               <TooltipTrigger asChild>
                 <Button
+                  asChild
                   variant="ghost"
                   size="icon"
                   className="h-8 w-8 px-0 text-muted-foreground hover:bg-accent/30 hover:text-foreground"
